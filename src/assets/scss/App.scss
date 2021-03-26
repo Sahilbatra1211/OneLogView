@@ -1,0 +1,26 @@
+$bg-color: yellow;
+$border-color: red;
+
+.app {
+  font-family: helvetica, arial, sans-serif;
+  padding: 2em;
+  border: 5px solid $border-color;
+
+  p {
+    background-color: $bg-color;
+  }
+}
+
+body{
+  margin:0px;
+  font-family: 'Noto Sans', sans-serif;
+  height:100%;
+}
+html{
+  height:100%;
+  min-height: 100vh;
+}
+#root{
+  height:100%;
+  min-height: 100vh;
+}
