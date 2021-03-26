@@ -82,21 +82,21 @@ const infoStackItemStylesLabel = mergeStyles({
 export default function LogData(props) {
     const { graphLog, restLog, mailboxGuid, tenantId,
         appId, deploymentRing, entityCommand, restAction,
-        graphStatusCode, restStatus, entityStatus } = props.logData;
+        graphStatusCode, restStatus, entityStatus,entityLog,latency } = props.logData;
 
     const [toggle, setToggle] = useState(0);
 
-    const basicLogsData = [{ name: "Mailbox GUID", value: mailboxGuid },
-    { name: "Tenant Id", value: tenantId },
-    { name: "App Id", value: appId },
-    { name: "Deployment Ring", value: deploymentRing },
-    { name: "Entity Command", value: entityCommand }
+    const basicLogsData = [{ name: "Mailbox GUID", value: entityLog.MailboxGuid },
+    { name: "Tenant Id", value: graphLog.tenantId },
+    { name: "App Id", value: graphLog.appId },
+    { name: "Deployment Ring", value: restLog.env_cloud_environment },
+    { name: "Entity Command", value: entityLog.Command }
     ];
 
-    const basicLogsStatus = [{ name: "REST Action", value: restAction },
-    { name: "Graph Status Code", value: graphStatusCode },
-    { name: "REST Status", value: restStatus },
-    { name: "Entity Status", value: entityStatus }
+    const basicLogsStatus = [{ name: "REST Action", value: restLog.Action },
+    { name: "Graph Status Code", value: graphLog.responseStatusCode },
+    { name: "REST Status", value: restLog.serviceErrorCode },
+    { name: "Entity Status", value: entityLog.ResultCategory }
     ];
 
     const overviewData = [{ name: "RequestId", value: restLog.RequestId },
@@ -105,20 +105,16 @@ export default function LogData(props) {
     { name: "ExceptionDetails", value: restLog.ExceptionDetails }
     ];
 
-    const graphData = [{ name: "Correlation Id", value: graphLog.correlationId },
+    const graphData = [{ name: "Message", value: graphLog.message},
     { name: "Incoming URI", value: graphLog.incomingUri },
     { name: "Api version", value: graphLog.apiVersion },
     { name: "Request Method", value: graphLog.requestMethod },
     { name: "Target URI", value: graphLog.targetUri },
     { name: "Response Status Code", value: graphLog.responseStatusCode },
-    { name: "Stacktrace", value: graphLog.message },
-    { name: "User agent", value: graphLog.userAgent },
-    { name: "Client Request Header", value: graphLog.ClientRequestHeader },
     { name: "Response Headers", value: graphLog.responseHeaders },
     ];
 
-    const restData = [{ name: "Env Name", value: restLog.env_name },
-    { name: "Env Cloud Name", value: restLog.env_cloud_name },
+    const restData = [
     { name: "Build version", value: restLog.buildVersion },
     { name: "Action", value: restLog.Action },
     { name: "Status Code", value: restLog.protocolStatusCode },
@@ -126,7 +122,33 @@ export default function LogData(props) {
     { name: "Exception Name", value: restLog.ExceptionName },
     { name: "Exception Details", value: restLog.ExceptionDetails },
     { name: "Return Code", value: restLog.ReturnCode },
+    { name: "Request Method", value: restLog.requestMethod },
+    { name: "Request Status", value: restLog.requestStatus },
+    { name: "Service Error Code", value: restLog.serviceErrorCode },
+    { name: "Protocol Status Code", value: restLog.protocolStatusCode },
     ];
+    const entityData = [
+        { name: "Command", value: entityLog.Command },
+        { name: "Client Info String", value: entityLog.ClientInfoString },
+        { name: "Error Code", value: entityLog.ErrorCode },
+        { name: "Exception", value: entityLog.Exception },
+        { name: "Custom Data", value: entityLog.CustomData },
+        { name: "Short Client Info String", value: entityLog.ShortClientInfoString },
+        { name: "Result Category", value: entityLog.ResultCategory },
+        ];
+        const latencyData = [
+            { name: "AD Read", value: latency.ADRead },
+            { name: "AD Search", value: latency.ADSearch },
+            { name: "Rpc Count", value: latency.RpcCount },
+            { name: "Store Cpu", value: latency.StoreCpu },
+            { name: "Store Call", value: latency.StoreCall },
+            { name: "latency Ms", value: latency.latencyMs },
+            { name: "Rpc Latency", value: latency.RpcLatency },
+            { name: "Mapi Latency", value: latency.MapiLatency },
+            { name: "Request Status", value: latency.requestStatus },
+            { name: "API Checkpoint Latency", value: latency.APICheckpointLatency },
+            { name: "Handler Checkpoint Latency", value: latency.HandlerCheckpointLatency },
+            ];
 
     const result = (data, index) => {
         return (
@@ -172,20 +194,6 @@ export default function LogData(props) {
                     :
                     <Stack styles={{ root: { border: '2px solid #797775', paddingLeft: 10, paddingRight: 10, paddingTop: 5 } }}>
                         <Pivot linkSize={PivotLinkSize.large}>
-                            <PivotItem headerText="Overview">
-                                <Label>
-                                    <Stack tokens={commonInfoStackTokens}>
-                                        {overviewData.map((data) => {
-                                            return (
-                                                <Stack horizontal styles={commonInfoStackStyles} tokens={commonInfoStackTokens}>
-                                                    <span className={infoStackItemStylesLabel}> {data.name} </span>
-                                                    <span className={infoStackItemStyles}> <ReadMore completeText={data.value} length={310}/>  </span>
-                                                </Stack>
-                                            )
-                                        })}
-                                    </Stack>
-                                </Label>
-                            </PivotItem>
                             <PivotItem headerText="Graph">
                                 <Label>
                                     <Stack tokens={commonInfoStackTokens}>
@@ -209,6 +217,30 @@ export default function LogData(props) {
                                                     <span className={infoStackItemStyles}> <ReadMore completeText={data.value} length={310}/> </span>
                                                 </Stack>
                                             )
+                                        })}
+                                    </Stack>
+                                </Label>
+                            </PivotItem>
+                            <PivotItem headerText="Entity">
+                                <Label>
+                                    <Stack tokens={commonInfoStackTokens}>
+                                        {entityData.map((data) => {
+                                            return (<Stack horizontal styles={commonInfoStackStyles} tokens={commonInfoStackTokens}>
+                                                <span className={infoStackItemStylesLabel}> {data.name} </span>
+                                                <span className={infoStackItemStyles}> <ReadMore completeText={data.value} length={310}/>  </span>
+                                            </Stack>)
+                                        })}
+                                    </Stack>
+                                </Label>
+                            </PivotItem>
+                            <PivotItem headerText="Latency">
+                                <Label>
+                                    <Stack tokens={commonInfoStackTokens}>
+                                        {latencyData.map((data) => {
+                                            return (<Stack horizontal styles={commonInfoStackStyles} tokens={commonInfoStackTokens}>
+                                                <span className={infoStackItemStylesLabel}> {data.name} </span>
+                                                <span className={infoStackItemStyles}> <ReadMore completeText={data.value} length={310}/>  </span>
+                                            </Stack>)
                                         })}
                                     </Stack>
                                 </Label>

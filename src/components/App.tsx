@@ -108,10 +108,12 @@ const VerticalStackBasicExample: React.FunctionComponent = () => {
     // ?startDate=2020-11-03T06:20:00.000Z&endDate=2020-11-03T18:20:00.000Z
 
     // fetch(`https://localhost:44388/api/Logs/${reqIDFieldValue}?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`)
-    fetch(`https://jsonplaceholder.typicode.com/todos/1`)
+    //fetch(`https://localhost:44388/api/Logs/${reqIDFieldValue}?startDate=${startTime}&endDate=${endTime}`)
+    fetch(`https://api.mocki.io/v1/b354eb7b`)
       .then(response => response.json())
       .then(resultsData => {
-        console.log(resultsData);
+        console.log("message",resultsData.graphLog.message);
+        setLogData(resultsData);
         setResultsFetched(true);
       });
   }
