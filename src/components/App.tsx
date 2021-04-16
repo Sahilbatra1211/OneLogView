@@ -111,7 +111,7 @@ const VerticalStackBasicExample: React.FunctionComponent = () => {
 
     // fetch(`https://localhost:44388/api/Logs/${reqIDFieldValue}?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`)
     //fetch(`https://localhost:44388/api/Logs/${reqIDFieldValue}?startDate=${startTime}&endDate=${endTime}`)
-    fetch(`https://www.google.com/search?q=a+mock+url+for+get+request&rlz=1C1CHBF_enIN933IN933&sxsrf=ALeKk03YHWzOzLqaGaEKKiI7R0a44qys7Q%3A1618562677167&ei=dU55YO7iCeyY4-EP1bO8kAs&oq=a+mock+url+for+get+request&gs_lcp=Cgdnd3Mtd2l6EAMyBQghEKABOgcIIxDqAhAnOgcILhDqAhAnOgQIIxAnOgQILhAnOgUIABCRAjoICAAQsQMQgwE6BAguEEM6BAgAEEM6BQguELEDOgUIABCxAzoCCAA6AgguOggILhCxAxCDAToHCC4QQxCTAjoHCC4QsQMQQzoECAAQCjoHCAAQhwIQFDoGCAAQFhAeOggIABAWEAoQHjoICCEQFhAdEB5QwSpYi1Zg61hoAXACeACAAb4BiAHNHZIBBDAuMjeYAQCgAQGqAQdnd3Mtd2l6sAEKwAEB&sclient=gws-wiz&ved=0ahUKEwiu8azrr4LwAhVszDgGHdUZD7IQ4dUDCA4&uact=5`)
+    fetch(`https://mocki.io/v1/bc105868-c63f-46d9-804f-8a36f0a7b03c`)
       .then(response => response.json())
       .then(resultsData => {
         console.log("message",resultsData.graphLog.message);
