@@ -54,7 +54,7 @@ export default function Navbar(props){
     <Stack horizontal styles={stackStyles} tokens={stackTokens}>
       <Stack.Item grow={3} styles={stackItemStyles}>
         <Stack horizontal styles={stackStyles2}>
-          <Text variant='xLarge' styles={{root:{fontFamily:'Noto Sans'}}}>Lookup Microsoft Graph Request </Text>
+          <Text variant='xLarge' styles={{root:{fontFamily:'Noto Sans'}}}>One Log View </Text>
         </Stack>
       </Stack.Item>
       <Stack.Item grow={2} styles={stackItemStyles2}>

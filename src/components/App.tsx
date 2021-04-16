@@ -10,6 +10,7 @@ import Navbar from './nav/Navbar';
 import moment from 'moment';
 import {config} from '../Config'
 import {PublicClientApplication} from '@azure/msal-browser';
+import { Text } from 'office-ui-fabric-react/lib/Text';
 
 const verticalGapStackTokens2: IStackTokens = {
   childrenGap: 40
@@ -18,6 +19,7 @@ const verticalGapStackTokens2: IStackTokens = {
 const stackItemStyles: IStackItemStyles = {
   root: {
     marginRight:'20px',
+    width:'80%',
   },
 };
 
@@ -109,7 +111,7 @@ const VerticalStackBasicExample: React.FunctionComponent = () => {
 
     // fetch(`https://localhost:44388/api/Logs/${reqIDFieldValue}?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`)
     //fetch(`https://localhost:44388/api/Logs/${reqIDFieldValue}?startDate=${startTime}&endDate=${endTime}`)
-    fetch(`https://api.mocki.io/v1/b354eb7b`)
+    fetch(`https://www.google.com/search?q=a+mock+url+for+get+request&rlz=1C1CHBF_enIN933IN933&sxsrf=ALeKk03YHWzOzLqaGaEKKiI7R0a44qys7Q%3A1618562677167&ei=dU55YO7iCeyY4-EP1bO8kAs&oq=a+mock+url+for+get+request&gs_lcp=Cgdnd3Mtd2l6EAMyBQghEKABOgcIIxDqAhAnOgcILhDqAhAnOgQIIxAnOgQILhAnOgUIABCRAjoICAAQsQMQgwE6BAguEEM6BAgAEEM6BQguELEDOgUIABCxAzoCCAA6AgguOggILhCxAxCDAToHCC4QQxCTAjoHCC4QsQMQQzoECAAQCjoHCAAQhwIQFDoGCAAQFhAeOggIABAWEAoQHjoICCEQFhAdEB5QwSpYi1Zg61hoAXACeACAAb4BiAHNHZIBBDAuMjeYAQCgAQGqAQdnd3Mtd2l6sAEKwAEB&sclient=gws-wiz&ved=0ahUKEwiu8azrr4LwAhVszDgGHdUZD7IQ4dUDCA4&uact=5`)
       .then(response => response.json())
       .then(resultsData => {
         console.log("message",resultsData.graphLog.message);
@@ -122,11 +124,12 @@ const VerticalStackBasicExample: React.FunctionComponent = () => {
     <>
     <Navbar isAuthenticated={isAuthenticated} onLogin={login} username={username}/>
     <Stack horizontal styles={{root:{height: '92.5%'}}} tokens={verticalGapStackTokens2}>
-      <Stack.Item grow={1} styles={{root:{backgroundColor:'#faf9f8',height:'100%'}}}>
+      <Stack.Item styles={{root:{backgroundColor:'#faf9f8',width:'20%'}}}>
       <SearchRequestId onClick={_onClick} onChangeReqIDFieldValue={onChangeReqIDFieldValue} onChangeStartDateTime={onChangeStartDateTime} onChangeEndDateTime={onChangeEndDateTime} />
       </Stack.Item>
-      <Stack.Item grow={20} styles={stackItemStyles}>
-      {resultsFetched && (<LogData logData={logData} />)}
+      <Stack.Item styles={stackItemStyles}>
+    {/* {resultsFetched==false?<Stack styles={{root:{marginTop:'5px'}}}><Text variant="mediumPlus"> Telemetry is currently logged under the following circumstances:</Text></Stack>:null} */}
+      {resultsFetched && (<LogData logData={logData} setResultsFetched= {setResultsFetched} />)}
       </Stack.Item>
     </Stack>
     </>

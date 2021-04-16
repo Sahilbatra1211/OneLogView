@@ -10,20 +10,20 @@ export default function ReadMore(props) {
 
         
     return (
-        <>
-            {props.completeText?.toString().length > 500 ?
+        <Stack>
+            {props.completeText?.toString().length > 300 ?
                 <>{showMore == false ?
-                    <Stack><Text styles={{ root: { fontFamily: 'Noto Sans'}}}>{props.completeText?.toString().substring(0, props.length)}</Text>
+                    <Stack>{console.log('false')}<Text styles={{ root: { fontFamily: 'Noto Sans'}}}>{props.completeText?.toString().substring(0, props.length)}</Text>
                         <Text  variant="smallPlus" styles={{ root: { fontFamily: 'Noto Sans',color:'rgb(0, 120, 212)',cursor:'pointer',padding:'1px', } }} onClick={() => { setShowMore(true) }}>Show More</Text></Stack>
                     :
-                    <Stack>
+                    <Stack>{console.log('true')}
                         <Text styles={{ root: { fontFamily: 'Noto Sans'}}}> {props.completeText }</Text>
                         <Text variant="smallPlus" styles={{ root: { fontFamily: 'Noto Sans',color:'rgb(0, 120, 212)',cursor:'pointer',padding:'1px', } }} onClick={() => { setShowMore(false) }}>Show Less</Text>
                     </Stack>
                 }</>
                 :
-                <Text styles={{ root: { fontFamily: 'Noto Sans'}}}> {props.completeText }</Text>
+                <Stack><Text styles={{ root: { fontFamily: 'Noto Sans'}}}> {console.log('skipped')}{props.completeText }</Text></Stack>
             }
-        </>
+        </Stack>
     )
 }

@@ -18,6 +18,7 @@ const commonInfoStackTokens: IStackTokens = {
 const commonInfoStackStyles: IStackStyles = {
     root: {
         // background: initial,
+        boxSizing:'border-box',
     },
 };
 
@@ -130,9 +131,9 @@ export default function LogData(props) {
     const entityData = [
         { name: "Command", value: entityLog.Command },
         { name: "Client Info String", value: entityLog.ClientInfoString },
-        { name: "Error Code", value: entityLog.ErrorCode },
+        { name: "Input Data", value: entityLog.InputData },
         { name: "Exception", value: entityLog.Exception },
-        { name: "Custom Data", value: entityLog.CustomData },
+        { name: "Build Version", value: entityLog.buildVersion },
         { name: "Short Client Info String", value: entityLog.ShortClientInfoString },
         { name: "Result Category", value: entityLog.ResultCategory },
         ];
@@ -161,7 +162,7 @@ export default function LogData(props) {
     var toggleColorBasic = toggle == 0 ? 'rgb(0, 120, 212)' : '#faf9f8';
     var toggleColorDetailed = toggle == 1 ? 'rgb(0, 120, 212)' : '#faf9f8';
     return (
-        <div>
+        <>
             <Stack horizontal>
                 <Stack onClick={() => { setToggle(0) }} style={{ borderBottom: `5px solid ${toggleColorBasic}` }} styles={navStackStyles}><Text variant="large" styles={{ root: { marginRight: '60px', fontFamily: 'Noto Sans',fontWeight:'600' } }}>Basic</Text></Stack>
                 <Stack onClick={() => { setToggle(1) }} style={{ borderBottom: `5px solid ${toggleColorDetailed}` }} styles={navStackStyles}><Text variant="large" styles={{ root: { marginRight: '60px', fontFamily: 'Noto Sans',fontWeight:'600' } }}>Detailed</Text></Stack>
@@ -227,7 +228,7 @@ export default function LogData(props) {
                                         {entityData.map((data) => {
                                             return (<Stack horizontal styles={commonInfoStackStyles} tokens={commonInfoStackTokens}>
                                                 <span className={infoStackItemStylesLabel}> {data.name} </span>
-                                                <span className={infoStackItemStyles}> <ReadMore completeText={data.value} length={310}/>  </span>
+                                                <span className={infoStackItemStyles}> <Text >{data.value}</Text>  </span>
                                             </Stack>)
                                         })}
                                     </Stack>
@@ -249,6 +250,6 @@ export default function LogData(props) {
                     </Stack>
                 }
             </Stack>
-        </div>
+        </>
     )
 }
